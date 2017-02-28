@@ -39,4 +39,15 @@ describe('api', function () {
         api.post(params, function () { });
         sinon.assert.calledWith(write, expected);
     });
+
+    it('should pass request error to callback', function (done) {
+        var expected = 'some error';
+        var request = new PassThrough();
+        request.returns(request);
+        api.get(function (err) {
+            assert.equal(err, expected);
+            done();
+        });
+        request.emit('error', expected);
+    });
 });
