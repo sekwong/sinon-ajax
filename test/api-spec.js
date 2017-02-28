@@ -21,11 +21,22 @@ describe('api', function () {
         response.end();
 
         var request = new PassThrough();
-        this.request.yields(response).returns(requesßt);
+        this.request.yields(response).returns(request);
 
         api.get(function (err, result) {
             assert.deepEqual(result, expected);
             done();
         });
+    });
+
+    // we only need to verify request.write is called
+    it('should send post params in request body', function () {
+        var params = { foo: 'bar' };
+        var expected = JSON.stringify(params);
+        var request = new PassThrough();
+        var write = sinon.spy(request, 'write');
+        this.request.returns(request);
+        api.post(params, function () { });
+        sinon.assert.calledWith(write, expected);
     });
 });
