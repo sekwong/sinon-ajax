@@ -1,3 +1,5 @@
+// api for browser
+
 var myapi = {
     get: function (callback) {
         var xhr = new XMLHttpRequest();
