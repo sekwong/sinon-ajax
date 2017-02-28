@@ -29,6 +29,14 @@ describe('MyAPI', function () {
         expect(requests[0].requestBody).to.equal(dataJson);
     });
 
+    it('should return error into callback', function (done) {
+        myapi.get(function (err, result) {
+            expect(err).to.exist;
+            done();
+        });
+        requests[0].respond(500);
+    });
+
     afterEach(function () {
         xhr.restore();
     });
