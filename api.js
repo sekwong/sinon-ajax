@@ -15,6 +15,9 @@ module.exports = {
                 callback(null, JSON.parse(data));
             });
         });
+        req.on('error', function (err) {
+            callback(err);
+        });
         req.end();
     },
     post: function (data, callback) {
@@ -32,6 +35,9 @@ module.exports = {
             });
         });
         req.write(JSON.stringify(data));
+        req.on('error', function (err) {
+            callback(err);
+        });
         req.end();
     }
 };

@@ -43,7 +43,7 @@ describe('api', function () {
     it('should pass request error to callback', function (done) {
         var expected = 'some error';
         var request = new PassThrough();
-        request.returns(request);
+        this.request.returns(request);
         api.get(function (err) {
             assert.equal(err, expected);
             done();
