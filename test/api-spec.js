@@ -1,17 +1,31 @@
 var assert = require('assert');
 var sinon = require('sinon');
-var PassThrough = require('stream').PassThrough;
+var PassThrough = require('stream').PassThrough; //test-double for streams
 var http = require('http');
 var api = require('../api.js');
 describe('api', function () {
     var request;
 
     beforeEach(function () {
-        request = sinon.stub(http, 'request');
+        this.request = sinon.stub(http, 'request');
     });
-    
+
     afterEach(function () {
-        request.restore();
+        this.request.restore();
     });
-    //We'll place our tests cases here
+
+    it('should convert get result to object', function (done) {
+        var expected = { hello: 'world' };
+        var response = new PassThrough();
+        response.write(JSON.stringify(expected));
+        response.end();
+
+        var request = new PassThrough();
+        this.request.yields(response).returns(requesßt);
+
+        api.get(function (err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        });
+    });
 });
